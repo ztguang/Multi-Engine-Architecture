@@ -1,19 +1,35 @@
-We have installed client-manet on node N11. The program client-manet is used to simulate the access of workflow system by sending data to server-manet running on node N10. Meanwhile, node N10 sends synchronous process state data and executes data to nodes N1~N9. By double clicking node N6, N8~N11, we obtain the terminal windows shown in Fig. 7~Fig. 10. 
+We have installed client-manet on node N11. The program client-manet is used to simulate the access of workflow 
+system by sending data to server-manet running on node N10. Meanwhile, node N10 sends synchronous process state 
+data and executes data to nodes N1~N9. By double clicking node N6, N8~N11, we obtain the terminal windows shown 
+in Fig. 7~Fig. 10. 
 
 The testing steps are as following.
 
 1. Execute command ./server-manet; the output is line ①, as shown in Fig. 7.
 
-2. Execute command ./server-manet in nodes N6 and N8 respectively; the outputs are lines ①⑥ in Fig. 8 and lines ②③ in Fig. 7.
+2. Execute command ./server-manet in nodes N6 and N8 respectively; the outputs are lines ①⑥ in Fig. 8 and 
+lines ②③ in Fig. 7.
 
 3. Execute command ./server-manet in node N9; the outputs are line ① in Fig. 9 and line ④ in Fig. 7.
 
-4. Execute command ./client-manet in nodes N11; the outputs are lines ①② in Fig. 10. Node N11 sends data to node N10 which then sends data to nodes N1~N9; the outputs are lines ②⑦ in Fig. 8 and line ② in Fig. 9. Upon finish of the command ./client-manet, the output is shown in line ⑤ in Fig. 7.
+4. Execute command ./client-manet in nodes N11; the outputs are lines ①② in Fig. 10. Node N11 sends data to 
+node N10 which then sends data to nodes N1~N9; the outputs are lines ②⑦ in Fig. 8 and line ② in Fig. 9. 
+Upon finish of the command ./client-manet, the output is shown in line ⑤ in Fig. 7.
 
-5. Now, we move node N10 to a new location in the bottom right of Fig. 11.  At this point the network topology is changed, and the server-manet (Multi-MPE Trigger Algorithm) is being executed to elect node N9 as M-MSD, as shown in line ③ in Fig. 9. Node N10 is elected as S-MSD, as shown in line ⑥ in Fig. 7. It cannot access M-MSD due to the disconnection to the network, as shown in lines ⑦~⑩ in Fig. 7. The server-manet is being executed for nodes N6 and N8 in Fig. 8. Nodes N6 and N8 are elected as S-MSDs again (lines ③⑧ in Fig. 8) and connect to M-MSD (lines ④⑤ in Fig. 9), 
+5. Now, we move node N10 to a new location in the bottom right of Fig. 11.  At this point the network 
+topology is changed, and the server-manet (Multi-MPE Trigger Algorithm) is being executed to elect 
+node N9 as M-MSD, as shown in line ③ in Fig. 9. Node N10 is elected as S-MSD, as shown in line ⑥ in Fig. 7. 
+It cannot access M-MSD due to the disconnection to the network, as shown in lines ⑦~⑩ in Fig. 7. 
+The server-manet is being executed for nodes N6 and N8 in Fig. 8. Nodes N6 and N8 are elected as S-MSDs 
+again (lines ③⑧ in Fig. 8) and connect to M-MSD (lines ④⑤ in Fig. 9), 
 
-6. Execute command ./client-manet in node N11 again (line ③ in Fig. 10), the outputs are lines ④⑤ in Fig. 10. Node N11 sends data to node N9 which then sends data to nodes N1~N8; the outputs are lines ④⑨ in Fig. 8. Upon finish of command ./client-manet, line ⑥ displays the output in Fig. 9.
+6. Execute command ./client-manet in node N11 again (line ③ in Fig. 10), the outputs are lines ④⑤ in Fig. 10. 
+Node N11 sends data to node N9 which then sends data to nodes N1~N8; the outputs are lines ④⑨ in Fig. 8. 
+Upon finish of command ./client-manet, line ⑥ displays the output in Fig. 9.
 
-7. Now, we move node N10 to the original location, as shown in Fig. 11. At this point the network topology is changed, and node N10 is elected as S-MSD to connect to M-MSD (line ⑦ in Fig. 9). 
+7. Now, we move node N10 to the original location, as shown in Fig. 11. At this point the network 
+topology is changed, and node N10 is elected as S-MSD to connect to M-MSD (line ⑦ in Fig. 9). 
 
-8. Execute command ./client-manet in node N11 again (line ⑥ in Fig. 10); the outputs are lines ⑦⑧ in Fig. 10. Node N11 sends data to node N9 which then sends data to nodes N1~N8 and N10. The outputs are shown by line ⑪ in Fig. 7 and lines ⑤⑩in Fig. 8. Upon finish of command ./client-manet, line ⑧ shows the output in Fig. 9.
+8. Execute command ./client-manet in node N11 again (line ⑥ in Fig. 10); the outputs are lines ⑦⑧ in Fig. 10. 
+Node N11 sends data to node N9 which then sends data to nodes N1~N8 and N10. The outputs are shown by line ⑪ 
+in Fig. 7 and lines ⑤⑩in Fig. 8. Upon finish of command ./client-manet, line ⑧ shows the output in Fig. 9.
