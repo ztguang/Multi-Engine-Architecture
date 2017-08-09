@@ -33,3 +33,11 @@ topology is changed, and node N10 is elected as S-MSD to connect to M-MSD (line 
 8. Execute command ./client-manet in node N11 again (line ⑥ in Fig. 10); the outputs are lines ⑦⑧ in Fig. 10. 
 Node N11 sends data to node N9 which then sends data to nodes N1~N8 and N10. The outputs are shown by line ⑪ 
 in Fig. 7 and lines ⑤⑩in Fig. 8. Upon finish of command ./client-manet, line ⑧ shows the output in Fig. 9.
+
+------------------------------------------------------------------------
+Fig. 12 shows our on-going research. We will combine Docker with the simulated network of CORE, 
+and will run server-manet, cBPM4Linux, MariaDB and Nginx in Docker. This simulation scenario will 
+be much closer to the actual MANETs environment in that nodes N1~N11 will construct a MANET, 
+then access workflow system via Web browser from node N11 to validate the feasibility of 
+the multi-engine architecture, and to investigate more studies to uncover the valuable new study issues.
+
