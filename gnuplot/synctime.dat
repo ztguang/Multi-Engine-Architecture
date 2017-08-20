@@ -1,0 +1,62 @@
+Ano		"receive from M-MSD"	"receive from client"
+n10-to-n6	101			60
+n10-to-n8	101			60
+n10-to-n9	101			60
+n9-to-n6	101			80
+n9-to-n8	141			80
+n10-to-n6	121			80
+n10-to-n8	140			80
+n10-to-n9	120			80
+
+
+#-----------------------------------------------------------------------------original data - begin
+# n11: (84)-<main> Send [ running process ] to 10.0.0.10 at millisecond:1503193302716
+# n11: (84)-<main> Send [ running process ] to 10.0.0.9 at millisecond:1503193340212
+# n11: (84)-<main> Send [ running process ] to 10.0.0.9 at millisecond:1503193364964
+# n11: (84)-<main> Send [ running process ] to 10.0.0.10 at millisecond:1503193416436
+
+# n6: (508)-<slave> Recv data from 10.0.0.10: [ synchronous data ] at millisecond:1503193302817
+# n6: (508)-<slave> Recv data from 10.0.0.9: [ synchronous data ] at millisecond:1503193365065
+# n6: (508)-<slave> Recv data from 10.0.0.10: [ synchronous data ] at millisecond:1503193416557
+
+# n8: (508)-<slave> Recv data from 10.0.0.10: [ synchronous data ] at millisecond:1503193302817
+# n8: (508)-<slave> Recv data from 10.0.0.9: [ synchronous data ] at millisecond:1503193365105
+# n8: (508)-<slave> Recv data from 10.0.0.10: [ synchronous data ] at millisecond:1503193416576
+
+# n9: (508)-<slave> Recv data from 10.0.0.10: [ synchronous data ] at millisecond:1503193302817
+# n9: (833)-<handle_client> client-manet connected at millisecond:1503193340292
+# n9: (833)-<handle_client> client-manet connected at millisecond:1503193365044
+# n9: (508)-<slave> Recv data from 10.0.0.10: [ synchronous data ] at millisecond:1503193416556
+
+# n10: (833)-<handle_client> client-manet connected at millisecond:1503193302776
+# n10: (913)-<main> I am Slave again							# then, n10 is moving out
+# n10: (520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193340675
+# n10: (520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193398767
+# n10: (907)-<main> I am Master again							# then, n10 is moving in
+# n10: (632)-<master> connected by [ 10.0.0.9 at PORT 47568 ]
+# n10: (632)-<master> connected by [ 10.0.0.8 at PORT 39852 ]
+# n10: (632)-<master> connected by [ 10.0.0.6 at PORT 46464 ]
+# n10: (833)-<handle_client> client-manet connected at millisecond:1503193416516
+#-----------------------------------------------------------------------------original data - end
+
+#-----------------------------------------------------------------------------  Processing original data - begin
+### n10 is Master
+# n11 connect to n10:				1503193302716
+# n10 receive from n11, send data to n6,8,9:	1503193302776		# 1503193302776 - 1503193302716 = 60
+# n6,8,9 receive data from n10:			1503193302817		# 1503193302817 - 1503193302776 = 41
+
+### n9 is Master
+# n11 connect to n9:				1503193364964
+# n9 receive from n11, send data to n6,8:	1503193365044		# 1503193365044 - 1503193364964 = 80
+# n6 receive data from n9:			1503193365065		# 1503193365065 - 1503193365044 = 21
+# n8 receive data from n9:			1503193365105		# 1503193365105 - 1503193365044 = 61
+
+### n10 is Master again
+# n11 connect to n10:				1503193416436
+# n10 receive from n11, send data to n6,8,9:	1503193416516		# 1503193416516 - 1503193416436 = 80
+# n6 receive data from n10:			1503193416557		# 1503193416557 - 1503193416516 = 41
+# n8 receive data from n10:			1503193416576		# 1503193416576 - 1503193416516 = 60
+# n9 receive data from n10:			1503193416556		# 1503193416556 - 1503193416516 = 40
+#-----------------------------------------------------------------------------  Processing original data - end
+
+

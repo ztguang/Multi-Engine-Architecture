@@ -1,0 +1,139 @@
+-------------------------------------------------------------------------------------------------
+in n11
+-------------------------------------------------------------------------------------------------
+
+[root@n12 n12.conf]# ./client-manet
+(76)-<main> I am Client, access workflow system
+(84)-<main> Send [ running process ] to 10.0.0.10 at millisecond:1503193302716
+[root@n12 n12.conf]# ./client-manet
+(76)-<main> I am Client, access workflow system
+(84)-<main> Send [ running process ] to 10.0.0.9 at millisecond:1503193340212
+[root@n12 n12.conf]# ./client-manet
+(76)-<main> I am Client, access workflow system
+(84)-<main> Send [ running process ] to 10.0.0.9 at millisecond:1503193364964
+[root@n12 n12.conf]# ./client-manet
+(76)-<main> I am Client, access workflow system
+(84)-<main> Send [ running process ] to 10.0.0.10 at millisecond:1503193416436
+[root@n12 n12.conf]# 
+
+-------------------------------------------------------------------------------------------------
+in n6
+-------------------------------------------------------------------------------------------------
+[root@n6 n6.conf]# ./server-manet
+(899)-<main> I am Slave
+(508)-<slave> Recv data from 10.0.0.10: [ synchronous data ] at millisecond:1503193302817
+(913)-<main> I am Slave again
+(508)-<slave> Recv data from 10.0.0.9: [ synchronous data ] at millisecond:1503193365065
+(913)-<main> I am Slave again
+(508)-<slave> Recv data from 10.0.0.10: [ synchronous data ] at millisecond:1503193416557
+
+
+-------------------------------------------------------------------------------------------------
+in n8
+-------------------------------------------------------------------------------------------------
+[root@n8 n8.conf]# ./server-manet
+(899)-<main> I am Slave
+(508)-<slave> Recv data from 10.0.0.10: [ synchronous data ] at millisecond:1503193302817
+(913)-<main> I am Slave again
+(508)-<slave> Recv data from 10.0.0.9: [ synchronous data ] at millisecond:1503193365105
+(913)-<main> I am Slave again
+(508)-<slave> Recv data from 10.0.0.10: [ synchronous data ] at millisecond:1503193416576
+
+
+-------------------------------------------------------------------------------------------------
+in n9
+-------------------------------------------------------------------------------------------------
+[root@n9 n9.conf]# ./server-manet
+(899)-<main> I am Slave
+(508)-<slave> Recv data from 10.0.0.10: [ synchronous data ] at millisecond:1503193302817
+(907)-<main> I am Master again
+(833)-<handle_client> client-manet connected at millisecond:1503193340292
+(632)-<master> connected by [ 10.0.0.6 at PORT 41862 ]
+(632)-<master> connected by [ 10.0.0.8 at PORT 53562 ]
+(840)-<handle_client> client-manet disconnected
+(833)-<handle_client> client-manet connected at millisecond:1503193365044
+(840)-<handle_client> client-manet disconnected
+(632)-<master> connected by [ 10.0.0.10 at PORT 39158 ]
+(913)-<main> I am Slave again
+(508)-<slave> Recv data from 10.0.0.10: [ synchronous data ] at millisecond:1503193416556
+
+
+-------------------------------------------------------------------------------------------------
+in n10
+-------------------------------------------------------------------------------------------------
+[root@n10 n10.conf]# ./server-manet
+(892)-<main> I am Master
+(632)-<master> connected by [ 10.0.0.6 at PORT 46442 ]
+(632)-<master> connected by [ 10.0.0.8 at PORT 39834 ]
+(632)-<master> connected by [ 10.0.0.9 at PORT 47554 ]
+(833)-<handle_client> client-manet connected at millisecond:1503193302776
+(840)-<handle_client> client-manet disconnected
+(913)-<main> I am Slave again
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193340675
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193341675
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193342675
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193343675
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193344676
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193345676
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193346676
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193347676
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193348676
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193349677
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193350677
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193351677
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193352677
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193353677
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193354678
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193355678
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193356678
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193357678
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193358678
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193359679
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193360679
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193361679
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193362679
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193363679
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193364680
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193365680
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193366680
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193367680
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193368680
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193369681
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193370681
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193371681
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193372681
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193373681
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193374681
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193375682
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193376682
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193377683
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193378683
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193379683
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193380683
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193381683
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193382684
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193383684
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193384684
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193385684
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193386684
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193387684
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193388685
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193389685
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193390685
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193391685
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193392685
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193393685
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193394686
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193395686
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193396686
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193397686
+(520)-<slave> reconnect Master: [ 10.0.0.9 ] at millisecond:1503193398767
+(907)-<main> I am Master again
+(632)-<master> connected by [ 10.0.0.9 at PORT 47568 ]
+(632)-<master> connected by [ 10.0.0.8 at PORT 39852 ]
+(632)-<master> connected by [ 10.0.0.6 at PORT 46464 ]
+(833)-<handle_client> client-manet connected at millisecond:1503193416516
+(840)-<handle_client> client-manet disconnected
+
+
+
