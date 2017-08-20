@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include <string.h>
+#include <sys/time.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/ioctl.h>
@@ -299,6 +300,9 @@ void *slave(void *arg)
 {
 	int sock;
 
+	// timestamp
+	struct timeval tv;
+
 	struct tcp_info info;
 	int leng = sizeof(info);
 
@@ -328,16 +332,27 @@ void *slave(void *arg)
 		getsockopt(sock, IPPROTO_TCP, TCP_INFO, &info, (socklen_t *) &leng);
 		if ((info.tcpi_state == TCP_ESTABLISHED)) {		//socket connected 
 			bzero(buf, BUF_SIZE);
+
 			//printf("(%d)-<%s> will Recv data\n", __LINE__, __FUNCTION__);
 			CHK2(len, recv(sock, buf, BUF_SIZE, MSG_NOSIGNAL));	//read * from master
-			printf("(%d)-<%s> Recv data from %s: [ %s ]\n", __LINE__, __FUNCTION__, masterip, buf);
+			//printf("(%d)-<%s> Recv data from %s: [ %s ]\n", __LINE__, __FUNCTION__, masterip, buf);
+
+			// timestamp
+			gettimeofday(&tv,NULL);
+			printf("(%d)-<%s> Recv data from %s: [ %s ] at millisecond:%ld\n", __LINE__, __FUNCTION__, masterip, buf, tv.tv_sec*1000 + tv.tv_usec/1000);
+
 		} else {		// socket disconnected 
 			CHK(close(sock));
 			//return NULL;
 			seraddr.sin_addr.s_addr = inet_addr(masterip);	//Master ip address
 			CHK2(sock, socket(PF_INET, SOCK_STREAM, 0));
 			CHK(connect(sock, (struct sockaddr *)&seraddr, sizeof(seraddr)) < 0);
-			printf("(%d)-<%s> reconnect Master: [ %s ]\n", __LINE__, __FUNCTION__, masterip);
+			//printf("(%d)-<%s> reconnect Master: [ %s ]\n", __LINE__, __FUNCTION__, masterip);
+
+			// timestamp
+			gettimeofday(&tv,NULL);
+			printf("(%d)-<%s> reconnect Master: [ %s ] at millisecond:%ld\n", __LINE__, __FUNCTION__, masterip, tv.tv_sec*1000 + tv.tv_usec/1000);
+
 			sleep(1);
 			continue;
 		}
@@ -351,7 +366,7 @@ void *slave(void *arg)
 //arg is sock, arg is NULL
 void *master(void *arg)
 {
-	int listenfd;		//监听socket
+	//int listenfd;		//监听socket
 	struct sockaddr_in addr, peer;
 	addr.sin_family = PF_INET;
 	addr.sin_port = htons(MASTER_PORT);
@@ -377,9 +392,11 @@ void *master(void *arg)
 		return NULL;
 	}
 
+	if (listenfd) close(listenfd);		//to avoid: Error: Address already in use
+
 	CHK2(listenfd, socket(PF_INET, SOCK_STREAM, 0));
 
-	//to avoid: Error: Address already in use  
+	//to avoid: Error: Address already in use
 	int on = 1;
 	if ((setsockopt(listenfd, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on))) < 0) {
 		perror("server: setsockopt failed");
@@ -605,6 +622,9 @@ void *handle_client(void *arg)
 	int len;
 	int client;
 
+	// timestamp
+	struct timeval tv;
+
 	struct tcp_info info;
 	int leng = sizeof(info);
 
@@ -640,6 +660,13 @@ void *handle_client(void *arg)
 				bzero(clientmsg, CLIENTMSG_SIZE);			//receive MESSAGE from client-manet.c
 				CHK2(len, recv(client, clientmsg, CLIENTMSG_SIZE, MSG_NOSIGNAL));
 				if (len > 0) {
+
+					// timestamp
+					//printf("second:%ld\n",tv.tv_sec);
+		gettimeofday(&tv,NULL);
+		printf("(%d)-<%s> client-manet connected at millisecond:%ld\n", __LINE__, __FUNCTION__, tv.tv_sec*1000 + tv.tv_usec/1000);
+					//printf("microsecond:%ld\n",tv.tv_sec*1000000 + tv.tv_usec);
+
 					//printf("(%d)-<%s> write pipe_write: %s\n", __LINE__, __FUNCTION__, clientmsg);
 					CHK(write(pipe_write, clientmsg, strlen(clientmsg)));	//send MSG to send2slave(void)
 				}
@@ -711,13 +738,13 @@ int main(int argc, char *argv[])
 		} else if (start==0 && changed==1 && ctrl==1) {
 			sleep(1);	//waiting to socket address 
 			//printf("(%d)-<%s> start: %d\t ctrl: %d\t changed: %d\n", __LINE__, __FUNCTION__, start, ctrl, changed);
-			printf("(%d)-<%s> I am Master\n", __LINE__, __FUNCTION__);
+			printf("(%d)-<%s> I am Master again\n", __LINE__, __FUNCTION__);
 			pthread_create(&tid_master, NULL, master, NULL);
 			pthread_join(tid_master, &tret);
 		} else if (start==0 && changed==1 && ctrl==0) {
 			sleep(6);	//waiting master initialize
 			//printf("(%d)-<%s> start: %d\t ctrl: %d\t changed: %d\n", __LINE__, __FUNCTION__, start, ctrl, changed);
-			printf("(%d)-<%s> I am Slave\n", __LINE__, __FUNCTION__);
+			printf("(%d)-<%s> I am Slave again\n", __LINE__, __FUNCTION__);
 			pthread_create(&tid_slave, NULL, slave, NULL);
 			pthread_join(tid_slave, &tret);
 		} else continue;	//start==0 and changed==0
