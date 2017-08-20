@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <sys/time.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <sys/socket.h>
@@ -25,6 +26,9 @@ int main(int argc, char *argv[])
 	//***************** GET masterip
 	size_t buffer_size = 16;
 	char *masterip = malloc(buffer_size * sizeof(char));
+
+	// timestamp
+	struct timeval tv;
 
 	//read master_ip of Master SMD;
 	FILE *fp1;
@@ -73,7 +77,12 @@ int main(int argc, char *argv[])
 
 	for (int i = 0; i < 1; i++) {
 		CHK(send(sock, MSG, strlen(MSG), 0));
-		printf("(%d)-<%s> Send [ %s ] to %s\n", __LINE__, __FUNCTION__, MSG, masterip);
+		//printf("(%d)-<%s> Send [ %s ] to %s\n", __LINE__, __FUNCTION__, MSG, masterip);
+
+		// timestamp
+		gettimeofday(&tv,NULL);
+		printf("(%d)-<%s> Send [ %s ] to %s at millisecond:%ld\n", __LINE__, __FUNCTION__, MSG, masterip, tv.tv_sec*1000 + tv.tv_usec/1000);
+
 		sleep(1);
 	}
 	close(sock);
