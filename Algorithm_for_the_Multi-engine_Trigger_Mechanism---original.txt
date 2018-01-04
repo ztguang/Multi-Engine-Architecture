@@ -1,0 +1,95 @@
+1: Description: When an MSD starts, the algorithm will run as a daemon. The MSD has dual roles: Master and Slave. When an MSD is elected as a Master, that MPE becomes the master MPE accessed by other MSDs, and related process data will be synchronized to other MSDs (Slave MPEs).
+ 2: 
+ 3: ctrl: used to identify Master or Slave;
+ 4:   ctrl=0, MSD is elected as a Slave;
+ 5:   ctrl=1, MSD is elected as a Master;
+ 6: 
+ 7: changed: used to identify the Master or Slave;
+ 8:  changed=0, Master MSD is not changed; thus, a thread in MAIN does not need to be created again for data synchronization;
+ 9: changed=1, Master MSD is changed; therefore, a thread in MAIN must be created again for data synchronization;
+10: 
+11: changed=0;
+12: is_me=-1;
+13: prev_state=-1; // 0:Slave; 1:Master;
+14: 
+15: //READ_CTRL, set the URL of the application system. Access master_ip in browser.
+16: PROCEDURE: READ_CTRL
+17: prev_ip=0.0.0.0;
+18: while true do
+19:   read the value of ctrl;
+20:   read master_ip of Master MSD;
+21:   if master_ip==me_ip and is_me!=-1 then
+22:     prev_state=is_me;
+23:     is_me=1;
+24:   else if master_ip!=me_ip and is_me!=-1 then
+25:     prev_state=is_me;
+26:     is_me=0;
+27:   end if
+28:   if master_ip!=prev_ip then
+29:     changed=1;
+30:     prev_ip=master_ip;
+31:     add (or update) "master_ip mpe.localhost" in /etc/hosts;
+32:   end if
+33:   sleep 1 s;
+34: done
+35: END PROCEDURE READ_CTRL
+36: 
+37: //****************************** MAIN Thread
+38: PROCEDURE: MAIN
+39: pthread_create(READ_CTRL);
+40: sleep 1s; //waiting for READ_CTRL to read the value of ctrl and master_ip of Master MSD
+41: start=1; //set initial state
+42: while true do
+43:   if start==1 and ctrl==1 then
+44:     start=0;
+45:     is_me=1;
+46:     pthread_create(Master);
+47:     pthread_join(Master);
+48:   else if start==1 and ctrl==0 then
+49:     start=0;
+50:     is_me=0;
+51:     pthread_create(Slave);
+52:     pthread_join(Slave);
+53:   else if start==0 and changed==1 and ctrl==1 then
+54:     pthread_create(Master);
+55:     pthread_join(Master);
+56:   else if start==0 and changed==1 and ctrl==0 then
+57: 	sleep(2);	//waiting master initialize
+58:     pthread_create(Master);
+59:     pthread_join(Master);
+60:   else //start==0 and changed==0
+61:     continue;
+62:   end if
+63: done
+64: END PROCEDURE MAIN
+65: 
+66: //****************************** Master Thread
+67: PROCEDURE: Master
+68: socket();
+69: bind();
+70: listen();
+71: while true do
+72:   accept(); //waiting for connect from Slave
+73:   pthread_create(M_THREAD);
+74: done
+75: END PROCEDURE Master
+76: 
+77: //************************** M_THREAD Thread
+78: PROCEDURE: M_THREAD
+79: while true do //communication between Master & Slave
+80:   if database updating then
+81:     send synchronous data to Slave;
+82:   end if
+83: done
+84: END PROCEDURE M_THREAD
+85: 
+86: //************************** Slave Thread
+87: PROCEDURE: Slave
+88: socket();
+89: connect();
+90: while true do
+91:   if receive synchronous data from Master then
+92:     update database;
+93:   end if
+94: done
+95: END PROCEDURE Slave
